@@ -1,7 +1,12 @@
 /*
 Learning script to understand how works arduino. 
 */
-
+// Memora_Arduino 
+// digitalRead ==> will read the value of the ouput 0 or 1 
+// analogRead ==> will read the real value of the output
+int led = 9;
+int brightness = 0; 
+int steps = 5;
 
 // the setup routine runs once when you press reset:
 void setup() {
@@ -10,14 +15,25 @@ void setup() {
   // define the Pin branch==> the PIN number where you want to do something. 
   // LED_BUILTIN is the led on the Arduino and/or the PIN 13. you coul change it with the PIN NUMBER. 
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(2,INPUT); 
+  pinMode(led,INPUT); 
 }
 
 void blink_led() {
   digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
+  delay(10);                       // wait for a second
   digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000); 
+  delay(10); 
+}
+
+void increase_decrease() {
+    analogWrite(led, brightness);
+    brightness = brightness + steps;
+      if (brightness <= 0 || brightness >= 255) {
+    steps = -steps;
+  }
+  delay(30);
+  int sensorValue = analogRead(led);
+  Serial.println((String)"Valor Sensor D"+led+ ": "+ sensorValue);
 }
 
 
@@ -36,10 +52,15 @@ void read_potentio() {
   // print out the value you read:
   delay(1000);
   Serial.println((String)"Valor Sensor A0: "+ sensorValue);
+  float voltage = sensorValue * (5.0 / 1023.0);
+  Serial.println((String)"Voltage Sensor A0: "+ voltage);
+  
 }
 // the loop routine runs over and over again forever:
 void loop() {
-  blink_led();
-  //read_potentio();
+  
+  read_potentio();
   //read_push_button();
+  //blink_led();
+  //increase_decrease();
 }
