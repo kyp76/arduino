@@ -31,7 +31,7 @@ void increase_decrease() {
       if (brightness <= 0 || brightness >= 255) {
     steps = -steps;
   }
-  delay(30);
+  //delay(30);
   int sensorValue = analogRead(led);
   Serial.println((String)"Valor Sensor D"+led+ ": "+ sensorValue);
 }
@@ -62,5 +62,5 @@ void loop() {
   read_potentio();
   //read_push_button();
   //blink_led();
-  //increase_decrease();
+  increase_decrease();
 }
